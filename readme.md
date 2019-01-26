@@ -4,32 +4,16 @@ Configuration in custom project
 Create db connection:
 ```php
 $db = new \ActiveRecord\db\Connection();
-$db->dsn = 'mysql:host=sanddb.gtflixtv.com;dbname=shared';
-$db->username = 'develop';
-$db->password = 'develop@box';
+$db->dsn = 'mysql:host=localhost;dbname=shared';
+$db->username = 'user';
+$db->password = 'pass';
 $db->charset = 'utf8';
-$db->schemaCache = Core_Registry::cache();
 ```
 
 provide it to ActiveRecord classes:
 ```php
 \ActiveRecord\db\ActiveRecord::setDb($db);
 \ActiveRecord\db\Query::setDb($db);
-```
-Configuration in php-core
-=
-
-Add config to static_config.php
-```php
-    'db' => [
-        'class' => '\ActiveRecord\db\Connection',
-        'properties' => [
-            'dsn' => 'mysql:host='.$secure['mysql']['mysqlcluster']['hostname'].';dbname=shared',
-            'username' => $secure['mysql']['mysqlcluster']['username'],
-            'password' => $secure['mysql']['mysqlcluster']['password'],
-            'charset' => 'utf8',
-        ]
-    ],
 ```
 
 Usage
