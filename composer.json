@@ -1,0 +1,15 @@
+{
+    "name": "gtflixtv/active-record",
+    "description": "Yii 2 active record",
+    "type": "project",
+    "minimum-stability": "dev",
+    "version":"1.0.0",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "ActiveRecord\\": ""
+        }
+    }
+}
