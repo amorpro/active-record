@@ -10,7 +10,7 @@ $db->password = 'pass';
 $db->charset = 'utf8';
 ```
 
-provide it to ActiveRecord classes:
+provide PDO instance to ActiveRecord classes:
 ```php
 \ActiveRecord\db\ActiveRecord::setDb($db);
 \ActiveRecord\db\Query::setDb($db);
