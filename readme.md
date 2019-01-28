@@ -2,7 +2,7 @@ Configuration in custom project
 =
 Configure the database connection
 ```php
-\ActiveRecord\db\Bootstrap::configure($host, $base, user, $password);
+\ActiveRecord\db\Bootstrap::configure($host, $base, $user, $password);
 ```
 
 Usage
