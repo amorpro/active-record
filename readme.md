@@ -28,7 +28,7 @@ $generator->prefix = 'Base';
 $generator->generate($db->getSlavePdo(), $tables);
 ``` 
 
-change the $tables variable with your list of tables.
+change the `$tables` variable with your list of tables.
 
 This script will generate next structure of files:
 
