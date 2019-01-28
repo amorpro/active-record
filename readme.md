@@ -13,7 +13,7 @@ http://www.yiiframework.com/doc-2.0/guide-db-active-record.html
 AR Generator
 =
 
-Create an ./bin/ar php script with next code
+Create an `./bin/ar` php script with next code
 
 ```php
 // Ensure that the \ActiveRecord\db\Bootstrap::configure is called somewhere in bootstrap
