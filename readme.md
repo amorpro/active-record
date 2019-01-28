@@ -1,19 +1,8 @@
 Configuration in custom project
 =
-
-Create db connection:
+Configure the database connection
 ```php
-$db = new \ActiveRecord\db\Connection();
-$db->dsn = 'mysql:host=localhost;dbname=shared';
-$db->username = 'user';
-$db->password = 'pass';
-$db->charset = 'utf8';
-```
-
-provide PDO instance to ActiveRecord classes:
-```php
-\ActiveRecord\db\ActiveRecord::setDb($db);
-\ActiveRecord\db\Query::setDb($db);
+\ActiveRecord\db\Bootstrap::configure($host, $base, user, $password);
 ```
 
 Usage
@@ -21,38 +10,37 @@ Usage
 
 http://www.yiiframework.com/doc-2.0/guide-db-active-record.html
 
-Generator
+AR Generator
 =
 
-Use generator to auto create active record models related with db tables:
- 
-prepare database structure:
+Create an ./bin/ar php script with next code
+
 ```php
- $database = new \ActiveRecord\GeneratorDatabase('<databasename>');
- 
- $database->addTable('<tablename>');
- $database->addTable('<tablename>');
- $database->addTable('<tablename>');
- ....
- 
+// Ensure that the \ActiveRecord\db\Bootstrap::configure is called somewhere in bootstrap
+include_once '../bootstrap.php';
+
+
+$tables          = 'database_name:table1,table2';
+
+$generator = new \ActiveGenerator\generator\ScriptHelper();
+$generator->path = dirname(__DIR__) . '/src/Model';
+$generator->prefix = 'Base';
+$generator->generate($db->getSlavePdo(), $tables);
 ``` 
-```php
-$generator = new \ActiveRecord\Generator($db);
 
-$generator->addDatabase($database1);
-$generator->addDatabase($database2);
-...
-$generator->generate('<namespace>','<path>');
-```
-for example:
+change the $tables variable with your list of tables.
 
-```php
-$database = new \ActiveRecord\GeneratorDatabase('shared');
-$database->addTable('website');
-$database->addTable('rest_query');
-$database->addTable('script_log');
+This script will generate next structure of files:
 
-$generator = new \ActiveRecord\Generator($db);
-$generator->addDatabase($database);
-$generator->generate('Model',__DIR__.'/../src/Model');
-```
+| Files | Read-Only | Explanation |
+| ----------------------------------------------- | -------------------------- |-------------------------- |
+| `../src/Model/Base/BaseTable1.php`                    | yes |  Table1 base active record class |
+| `../src/Model/Base/BaseTable1Query.php`               | yes |  Table1 query base class to retrieve the data from database  |
+| `../src/Model/Base/BaseTable1Peer.php`                | yes |  Table1 base object to store field names, table name, constants related to model  |
+| `../src/Model/Base/BaseTable2.php`                    | yes |  Table2 base active record class |
+| `../src/Model/Base/BaseTable2Query.php`               | yes |  Table2 query base class to retrieve the data from database |
+| `../src/Model/Base/BaseTable2Peer.php`                | yes |  Table2 base object to store field names, table name, constants related to model |
+| `../src/Model/Table1.php`                             | no |  Table1 active record class who can be expand for your needs |
+| `../src/Model/Table1Query.php`                        | no |  Table1 query class who can be expand for your needs |   
+| `../src/Model/Table2.php`                             | no |  Table2 active record class who can be expand for your needs |
+| `../src/Model/Table2Query.php`                        | no |  Table2 query class who can be expand for your needs |
